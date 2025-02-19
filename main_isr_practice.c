@@ -7,7 +7,7 @@ const int BTN_PIN_R = 28;
 // ERRO: cppcheck unitvar
 // ERRO: addon IsrVarVolatile
 volatile int btn_flag;
-volatile int capture_flag = 0;
+
 
 void btn_callback(uint gpio, uint32_t events) {
     if (events == 0x4) { // fall edge
@@ -47,6 +47,7 @@ int main() {
                                        &btn_callback);
 
     int a;
+	int capture_flag = 0;
     while (1) {
         if (btn_flag) {
             capture_flag = 1;
@@ -55,6 +56,7 @@ int main() {
 
         if (capture_flag) {
             atualiza();
+			capture_flag = 0;
         }
     }
 }
